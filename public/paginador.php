@@ -106,6 +106,62 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 	}
 
+	public function getRangoPaginacion($limite = false)
+	{
+		if($limite && is_numeric($limite))
+		{
+			$limite = $limite;
+		} else {
+			$limite = 10;
+		}
+
+		$total_paginas = $this->_paginacion['total'];
+		$pagina_seleccionada = $this->_paginacion['actual'];
+		$rango = ceil($limite / 2);
+		$paginas = array();
+
+		$rango_derecho = $total_paginas - $pagina_seleccionada;
+		
+		if($rango_derecho < $rango)
+		{
+			$resto = $rango - $rango_derecho;
+		} else {
+			$resto = 0;
+		}
+
+		$rango_izquierdo = $pagina_seleccionada	- ($rango + $resto);
+
+		//echo 'rango_derecho: '. $rango_derecho . ' rango ' . $rango . ' total_paginas ' . $total_paginas . ' pagina_seleccionada ' . $pagina_seleccionada . ' resto ' . $resto . ' rango_izquierdo ' . $rango_izquierdo;
+
+		for ($i = $pagina_seleccionada; $i > $rango_izquierdo; $i--) { 
+			if ($i == 0) {
+				break;
+			}
+			$paginas[] = $i;
+		}
+
+		sort($paginas);
+
+		if($pagina_seleccionada < $rango){
+			$rango_derecho = $limite;
+
+		} else {
+			$rango_derecho = $pagina_seleccionada + $rango;
+		}
+
+		for($i = $pagina_seleccionada + 1; $i <= $rango_derecho; $i++){
+			if($i > $total_paginas)
+			{
+				break;
+			}
+			$paginas[] = $i;
+		}
+
+		$this->_paginacion['rango'] = $paginas;
+		return $this->_paginacion;
+
+	}
+
 	public function getPaginacion()
 	{
 		echo 'entro';

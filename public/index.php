@@ -18,10 +18,12 @@
 	<?php
 	//echo "\n".'$_GET'."\n"; var_dump($_GET);
 	//echo "\n".'$_GET_1:'."\n"; var_dump($_GET['pagina']);
-	/*
-		print_r(get_required_files());
-		$_db = new Db();
-	for($i=0; $i<=55; $i++){
+
+	
+/*
+//para insertar registros
+$_db = new Database();
+	for($i=0; $i<=550; $i++){
 		//mysql_query("insert into usaurios values(null, 'aa$i', 'cc$i')", Db::connect());
 		$query = "insert into posts values(null, 'aa$i', 'cc$i')";
 		echo $query . '<br>';
@@ -29,14 +31,19 @@
 		$_db->query($query);
 	}
 
-	*/
+exit;
+*/
+
 	$paginador = new Paginador();
 	$pagina =$_GET['pagina'];
 	print_r($paginador->paginar("select * from posts",$pagina));
-	$params = $paginador->getPaginacion();
+	$params = $paginador->getRangoPaginacion();
 	print_r($paginador->getPaginacion());
 
-	?>
+
+
+?>
+
 	</pre>
 	<ul>	
 			<li style='display: inline; margin-right: 	5px'>	
@@ -58,12 +65,12 @@
 
 			</li>
 			<li style='display: inline; margin-right: 	5px'>	
-					<?php for($i=1; $i<=$params['total']; $i++): ?>
-						<?php if($params['actual'] != $i): ?>
-						<a href="?pagina=<?php echo $i; ?>"><?php echo $i; ?>
+					<?php for($i = 0; $i < count($params['rango']); $i++): ?>
+						<?php if($params['actual'] != $params['rango'][$i]): ?>
+						<a href="?pagina=<?php echo $params['rango'][$i]; ?>"><?php echo $params['rango'][$i]; ?>
 						</a>
 					<?php else: ?>
-						<?php echo $i; ?>
+						<?php echo $params['rango'][$i]; ?>
 
 					<?php endif;?>
 					<?php endfor;?>
