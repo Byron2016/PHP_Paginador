@@ -34,6 +34,7 @@
 
 	$paginador = new Paginador();
 	print_r($paginador->paginar("select * from posts"));
+	print_r($paginador->getPaginacion());
 	?>
 
 	
