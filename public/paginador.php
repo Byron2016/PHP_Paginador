@@ -18,6 +18,7 @@ class paginador
 
 	public function paginar($query, $pagina = false, $limite = false)
 	{
+		echo 'valor de pagina: ' . $pagina;
 		if($limite && is_numeric($limite))
 		{
 			$limite = $limite;
@@ -25,17 +26,19 @@ class paginador
 			$limite = 10;
 		}
 
-		if($limite && is_numeric($pagina))
+		if($pagina && is_numeric($pagina))
 		{
+			//echo 'esta en pagina asignacion';
 			$pagina = $pagina;
 			$inicio = ($pagina -1) * $limite;
 		} else {
+			echo 'esta en pagina asignacion else';
 			$pagina = 1;
 			$inicio = 0;
 		}
 
 		//$consulta = mysql_query($query, Db::Connect());
-		//echo $query;
+		echo $query.'<br>';
 		$post = $this->_db->query($query)->fetchAll();
 
 		//$consulta = $this->_db->query($query);
@@ -44,7 +47,7 @@ class paginador
 		//echo $registros;
 		$total = ceil($registros / $limite);
 		$query = $query . ' LIMIT ' . $inicio . ','.  $limite;
-		//echo $query;
+		echo ' 2: ' . $query.'<br>';
 		//echo ' valores: ' . $limite .' ' . $inicio;
 		//$consulta = mysql_query($query, Db::Connect());
 
@@ -68,7 +71,7 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 		//success case
 		else{
      		//continue flow
-     		while($regs = $consulta->fetch()){
+     		while($regs = $consulta->fetchAll()){
 					$this->_datos[] = $regs;
 			}
 		}
@@ -105,9 +108,12 @@ while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 	public function getPaginacion()
 	{
+		echo 'entro';
 		if($this->_paginacion){
+			echo 'en ';
 			return $this->_paginacion;
 		} else {
+			//echo 'en false';
 			return false;
 		}
 		
