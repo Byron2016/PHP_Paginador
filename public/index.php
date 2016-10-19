@@ -1,7 +1,7 @@
 
 <?php
 	require_once 'config.php';
-	require_once 'db.php';
+	require_once 'DataBase.php';
 	require_once 'paginador.php';
 
 ?>
@@ -16,6 +16,7 @@
 <body>
 	<pre>
 	<?php
+	/*
 		print_r(get_required_files());
 		$_db = new Db();
 
@@ -28,7 +29,13 @@
 		//$consulta = $this->_db->query($query);
 		$_db->query($query);
 	}
+
+	*/
+
+	$paginador = new Paginador();
+	print_r($paginador->paginar("select * from posts"));
 	?>
+
 	
 	
 	</pre>

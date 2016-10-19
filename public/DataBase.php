@@ -16,7 +16,7 @@ class Db
         }
 }
 */
-class Db extends  PDO
+class DataBase extends  PDO
 {
         public function __construct()
         {
